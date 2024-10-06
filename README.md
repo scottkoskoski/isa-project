@@ -74,5 +74,5 @@ To compile the final stage (writeback.c) and test the emulator with an ELF file,
    gcc -o writeback writeback.c
 3. Run the emulator with your desired ELF file:
    ```bash```
-   ./writeback <ELF FILE>
+   ./writeback \<ELF FILE\>
 
