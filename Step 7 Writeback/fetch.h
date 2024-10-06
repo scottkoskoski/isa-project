@@ -74,3 +74,4 @@ int fetch(VirtualMachine *vm, Instruction *inst) {
 }
 
 #endif
+

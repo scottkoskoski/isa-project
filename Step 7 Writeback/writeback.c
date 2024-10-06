@@ -126,3 +126,4 @@ int main(int argc, char *argv[]) {
     free_machine(vm);
     return 0;
 }
+
