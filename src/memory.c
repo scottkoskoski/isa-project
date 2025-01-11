@@ -1,24 +1,8 @@
-/* Scott Koskoski
- * 7/28/2024
- * RISC-V ISA Emulator Project
- * Part 6 - Memory
- */
-
-#ifndef MEMORY_H
-#define MEMORY_H
-
-#include <stdio.h>
-#include "fetch.h"
-#include "load_elf.h"
-#include "machine.h"
-#include "alu.h"
-#include "decode.h"
-#include "execute.h"
 #include "memory.h"
+#include <stdio.h>
 
 void memory_stage(VirtualMachine *vm, Instruction *inst, int32_t *result) {
     uint32_t address = (uint32_t)(*result);
-    
     if (inst->memop == 1) { // LOAD operation
         switch (inst->funct3) {
             case 0: // LB (Load Byte)
@@ -29,12 +13,6 @@ void memory_stage(VirtualMachine *vm, Instruction *inst, int32_t *result) {
                 break;
             case 2: // LW (Load Word)
                 *result = *(int32_t*)&vm->memory[address];
-                break;
-            case 4: // LBU (Load Byte Unsigned)
-                *result = (uint8_t)vm->memory[address];
-                break;
-            case 5: // LHU (Load Halfword Unsigned)
-                *result = *(uint16_t*)&vm->memory[address];
                 break;
             default:
                 fprintf(stderr, "Unsupported LOAD funct3: %u\n", inst->funct3);
@@ -57,5 +35,3 @@ void memory_stage(VirtualMachine *vm, Instruction *inst, int32_t *result) {
         }
     }
 }
-
-#endif // MEMORY_H

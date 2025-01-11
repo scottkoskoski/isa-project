@@ -1,0 +1,30 @@
+Archive/
+
+# Compiled object files
+*.o
+
+# Executable files
+riscv_emulator
+
+# Build artifacts
+*.out
+*.exe
+
+# Temporary files and directories
+*.tmp
+*.swp
+*.log
+*.bak
+*.dSYM/
+*.directory
+
+# System files
+.DS_Store
+Thumbs.db
+
+# VSCode-specific files
+.vscode/
+*.code-workspace
+
+# Backup files
+*~
