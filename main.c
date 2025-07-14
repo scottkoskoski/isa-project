@@ -124,9 +124,9 @@ int main(int argc, char *argv[]) {
         // Print decoded instruction for debugging
         print_decoded_instruction(&inst);
 
-        // Execute the instruction
+        // Execute the instruction (includes PC updates for branches/jumps)
         int32_t result;
-        execute_instruction(&inst, &result);
+        execute_stage(&vm, &inst, &result);
 
         // Perform memory operations (this may cause program termination via ECALL)
         memory_stage(&vm, &inst, &result);
