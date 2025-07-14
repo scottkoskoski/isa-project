@@ -90,17 +90,36 @@ int main(int argc, char *argv[]) {
 
     printf("Program counter set to 0x%08X\n", vm.program_counter);
 
-    while (1) {
+    int instruction_count = 0;
+    const int MAX_INSTRUCTIONS = 1000000; // Prevent infinite loops during testing
+
+    while (instruction_count < MAX_INSTRUCTIONS) {
         Instruction inst;
+        
+        // Fetch instruction
         if (fetch(&vm, &inst) != 0) {
-            fprintf(stderr, "Error fetching instruction\n");
+            fprintf(stderr, "Error fetching instruction or end of program reached\n");
             break;
         }
 
-        printf("Fetched instruction: 0x%08X\n", inst.inst);
+        // Check for null instruction (potential end of program)
+        if (inst.inst == 0) {
+            printf("Null instruction encountered, stopping execution\n");
+            break;
+        }
+
+        printf("Instruction #%d: PC=0x%08X, Inst=0x%08X\n", 
+               instruction_count + 1, vm.program_counter - 4, inst.inst);
 
         // Decode the fetched instruction
         decode_instruction(&vm, &inst);
+
+        // Check for unsupported instruction
+        if (inst.type == UNSUPPORTED_TYPE) {
+            fprintf(stderr, "Unsupported instruction: 0x%08X at PC=0x%08X\n", 
+                    inst.inst, vm.program_counter - 4);
+            break;
+        }
 
         // Print decoded instruction for debugging
         print_decoded_instruction(&inst);
@@ -109,16 +128,24 @@ int main(int argc, char *argv[]) {
         int32_t result;
         execute_instruction(&inst, &result);
 
-        // Perform memory operations
+        // Perform memory operations (this may cause program termination via ECALL)
         memory_stage(&vm, &inst, &result);
 
         // Perform writeback stage
         writeback_stage(&vm, &inst, result);
 
         // Print result of the writeback stage
-        printf("Result after writeback stage: 0x%08X\n", result);
+        printf("Result after writeback: 0x%08X\n", result);
+        printf("------------------------\n");
+
+        instruction_count++;
     }
 
+    if (instruction_count >= MAX_INSTRUCTIONS) {
+        fprintf(stderr, "Maximum instruction limit reached. Possible infinite loop.\n");
+    }
+
+    printf("Executed %d instructions\n", instruction_count);
     free_machine(&vm);
     return 0;
 }
