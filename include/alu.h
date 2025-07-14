@@ -23,7 +23,8 @@ typedef enum {
     Nop
 } AluOp;
 
-// Function declaration
+// Function declarations
 AluOp get_r_type_alu_op(uint8_t funct3, uint8_t funct7);
+AluOp get_i_type_alu_op(uint8_t funct3, uint8_t funct7);
 
 #endif // ALU_H
