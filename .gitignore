@@ -5,6 +5,7 @@ Archive/
 
 # Executable files
 riscv_emulator
+test
 
 # Build artifacts
 *.out
