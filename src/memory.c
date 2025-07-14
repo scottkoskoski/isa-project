@@ -1,7 +1,10 @@
 #include "memory.h"
+#include "machine.h"    // For VirtualMachine, SIZE_OF_MEMORY
+#include "fetch.h"      // For Instruction struct
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>     // For uint32_t, int32_t, uint8_t, etc.
 
 void memory_stage(VirtualMachine *vm, Instruction *inst, int32_t *result) {
     uint32_t address = (uint32_t)(*result);
