@@ -14,11 +14,19 @@ uint32_t fetch_instruction(VirtualMachine *vm) {
 
 int fetch(VirtualMachine *vm, Instruction *inst) {
     inst->inst = fetch_instruction(vm);
+    if (inst->inst == 0) {
+        return -1; // Return error for null instructions (or end of program)
+    }
     inst->left = 0;
     inst->right = 0;
     inst->disp_strval = 0;
     inst->rd = 0;
+    inst->rs1 = 0;
+    inst->rs2 = 0;
+    inst->funct3 = 0;
+    inst->funct7 = 0;
     inst->memop = 0;
     inst->aluop = 0;
+    inst->opcode = 0;   
     return 0;
 }
