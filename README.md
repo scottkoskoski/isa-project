@@ -136,6 +136,29 @@ Remove build artifacts:
 make clean
 ```
 
+## Testing
+
+A simple test program is provided to verify emulator funcionality:
+
+**Prerequisites:**
+
+```bash
+sudo apt install binutils-risc64-linux-gnu
+```
+
+Compile the test program:
+
+```bash
+riscv64-linux-gnu-as -march=rv32im -mabi=ilp32 -o test.o test.s
+riscv64-linux-gnu-ld -m elf32lriscv -o test test.o
+```
+
+Run the test:
+
+```bash
+./riscv_emulator test
+```
+
 ## Features and Specifications
 
 **Current Implementation**
@@ -172,3 +195,7 @@ The implementation prioritizes correctness and clarity over performance optimiza
 ## Future Enhancements
 
 Potential areas for extension include floating-point instruction support (RV32F), compressed instruction set (RV32C), privileged architecture features, and performance optimization techniques such as branch prediction and caching simulation.
+
+```
+
+```
